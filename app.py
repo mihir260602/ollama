@@ -21,12 +21,13 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-def generate_response(question, llm, temperature, max_tokens):
-    llm = Ollama(model=llm)
+def generate_response(question, model_name, temperature, max_tokens):
+    llm = ChatOpenAI(model=model_name, temperature=temperature, max_tokens=max_tokens)
     output_parser = StrOutputParser()
     chain = prompt | llm | output_parser
     answer = chain.invoke({'question': question})
     return answer
+
 
 # Apply a custom CSS style to the app
 st.markdown("""
